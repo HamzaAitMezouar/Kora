@@ -11,7 +11,11 @@ class bottomSheet extends StatefulWidget {
 }
 
 class _bottomSheetState extends State<bottomSheet> {
-  final items = ['Individual', 'A team ', 'Two Teams'];
+  List<Map>? items = [
+    {'state': 'Individual', 'image': 'assets/user.png'},
+    {'state': 'A team ', 'image': 'assets/group.png'},
+    {'state': 'Two Teams', 'image': 'assets/crowd.png'}
+  ];
   String value = '';
 
   @override
@@ -69,16 +73,19 @@ class _bottomSheetState extends State<bottomSheet> {
             children: [
               const Text('Choose members :',
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
-              DropdownButton(
-                hint: const Text('Click to Choose'),
-                icon: const Icon(Icons.keyboard_arrow_down),
-                onChanged: (dynamic val) {
-                  setState(() {
-                    value = val.toString();
-                  });
-                },
-                items: items.map((e) => dropdownItems(e)).toList(),
-              )
+              DropdownButtonHideUnderline(
+                child: DropdownButton(
+                    hint: const Text('Click to Choose'),
+                    icon: const Icon(Icons.keyboard_arrow_down),
+                    onChanged: (dynamic val) {
+                      setState(() {
+                        value = val.toString();
+                      });
+                    },
+                    items: items!
+                        .map((e) => dropdownItems(e['state'], e['image']))
+                        .toList()),
+              ),
             ],
           ),
           (value == '')
@@ -115,9 +122,17 @@ class _bottomSheetState extends State<bottomSheet> {
     );
   }
 
-  DropdownMenuItem dropdownItems(String item) {
+  DropdownMenuItem dropdownItems(String item, String image) {
     return DropdownMenuItem(
-      child: Text(item),
+      child: Row(
+        children: [
+          Image.asset(
+            image,
+            height: 20,
+          ),
+          Text(item),
+        ],
+      ),
       value: item,
     );
   }

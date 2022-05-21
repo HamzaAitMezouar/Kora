@@ -100,16 +100,31 @@ class _homeState extends State<home> {
             initialCameraPosition: const CameraPosition(
                 target: LatLng(32.336998652, -6.356498574)),
           ),
-          // Positioned(
-          // right: 0,
-          //left: 0,
-          // top: 30,
-          // child: NativeAdmob(
-          //  adUnitID: AdsManager.NativeAdUnitId,
-          //  controller: adController,
-          //  numberAds: 4,
-          // type: NativeAdmobType.full,
-          //    child: ,),
+          Positioned(
+            right: 0,
+            left: 0,
+            top: 30,
+            // child: NativeAdmob(
+            //  adUnitID: AdsManager.NativeAdUnitId,
+            //  controller: adController,
+            //  numberAds: 4,
+            // type: NativeAdmobType.full,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                CircleAvatar(
+                  backgroundImage: AssetImage('assets/splash2.png'),
+                ),
+                Text('Kora',
+                    style: TextStyle(
+                      color: Colors.green,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Trajan Pro',
+                    ))
+              ],
+            ),
+          ),
           Positioned(
             bottom: 20,
             right: 0,

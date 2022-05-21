@@ -14,6 +14,7 @@ class bottomSheet extends StatefulWidget {
 }
 
 class _bottomSheetState extends State<bottomSheet> {
+  late AdmobReward reward;
   late AdmobInterstitial admobInterstitial;
   List<Map>? items = [
     {'state': 'Individual', 'image': 'assets/user.png'},
@@ -32,7 +33,24 @@ class _bottomSheetState extends State<bottomSheet> {
         }
       },
     );
+    reward = AdmobReward(
+      adUnitId: AdsManager.RewardBasedVideoAdUnitId,
+      listener: (event, args) {
+        if (event == AdmobAdEvent.closed) {
+          reward.load();
+        }
+      },
+    );
     admobInterstitial.load();
+    reward.load();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    admobInterstitial.dispose();
+    reward.dispose();
   }
 
   @override
@@ -95,6 +113,7 @@ class _bottomSheetState extends State<bottomSheet> {
                     hint: const Text('Click to Choose'),
                     icon: const Icon(Icons.keyboard_arrow_down),
                     onChanged: (dynamic val) {
+                      reward.show();
                       setState(() {
                         value = val.toString();
                       });

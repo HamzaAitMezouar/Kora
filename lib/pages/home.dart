@@ -1,5 +1,9 @@
+import 'package:admob_flutter/admob_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:kora/ads/ads.dart';
+//import 'package:flutter_native_admob/flutter_native_admob.dart';
+//import 'package:flutter_native_admob/native_admob_controller.dart';
 
 import '../widgets/bottomSheet.dart';
 
@@ -11,7 +15,11 @@ class home extends StatefulWidget {
 }
 
 class _homeState extends State<home> {
+  // final adController = NativeAdmobController();
   late GoogleMapController mapcontroller;
+
+  late AdmobBannerSize bannerSize;
+
   Set<Marker> markers = {};
   // late BitmapDescriptor terrainlmarker;
   @override
@@ -24,6 +32,8 @@ class _homeState extends State<home> {
   void initState() {
     super.initState();
     //terrainlogo();
+
+    //  adController.reloadAd(forceRefresh: true);
   }
 
   /*void terrainlogo() async {
@@ -90,25 +100,23 @@ class _homeState extends State<home> {
             initialCameraPosition: const CameraPosition(
                 target: LatLng(32.336998652, -6.356498574)),
           ),
+          // Positioned(
+          // right: 0,
+          //left: 0,
+          // top: 30,
+          // child: NativeAdmob(
+          //  adUnitID: AdsManager.NativeAdUnitId,
+          //  controller: adController,
+          //  numberAds: 4,
+          // type: NativeAdmobType.full,
+          //    child: ,),
           Positioned(
+            bottom: 20,
             right: 0,
             left: 0,
-            top: 30,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(
-                  'assets/splash2.png',
-                  height: 25,
-                ),
-                const Text(
-                  'Kora',
-                  style: TextStyle(
-                      color: Colors.green,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold),
-                )
-              ],
+            child: AdmobBanner(
+              adUnitId: AdsManager.BannerAdUnitId,
+              adSize: AdmobBannerSize.SMART_BANNER(context),
             ),
           )
         ],

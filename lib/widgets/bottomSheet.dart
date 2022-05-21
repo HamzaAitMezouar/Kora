@@ -1,6 +1,9 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:admob_flutter/admob_flutter.dart';
 import 'package:flutter/material.dart';
+
+import '../ads/ads.dart';
 
 class bottomSheet extends StatefulWidget {
   String title;
@@ -11,12 +14,26 @@ class bottomSheet extends StatefulWidget {
 }
 
 class _bottomSheetState extends State<bottomSheet> {
+  late AdmobInterstitial admobInterstitial;
   List<Map>? items = [
     {'state': 'Individual', 'image': 'assets/user.png'},
     {'state': 'A team ', 'image': 'assets/group.png'},
     {'state': 'Two Teams', 'image': 'assets/crowd.png'}
   ];
   String value = '';
+  @override
+  void initState() {
+    super.initState();
+    admobInterstitial = AdmobInterstitial(
+      adUnitId: AdsManager.InterstitialAdUnitId,
+      listener: (event, args) {
+        if (event == AdmobAdEvent.closed) {
+          admobInterstitial.load();
+        }
+      },
+    );
+    admobInterstitial.load();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -110,7 +127,9 @@ class _bottomSheetState extends State<bottomSheet> {
                               fontSize: 18,
                               fontWeight: FontWeight.w500)),
           TextButton(
-            onPressed: () {},
+            onPressed: () {
+              admobInterstitial.show();
+            },
             child: Text(
               'Reserve Place',
               style: TextStyle(color: Colors.grey),
